@@ -1,8 +1,22 @@
 # In order to run the backend
 ## Set up Local Environment
-`python -m venv myenv  `
+
+```sh
+python -m venv myenv
+```
+
+
 ## Activate the Environment
-`.\myenv\Scripts\Activate.ps1`<br/>
-`pip install -r requirements.txt`
+```sh
+.\myenv\Scripts\Activate.ps1
+```
+
+```sh
+pip install -r requirements.txt
+```
+
 ## Run server script
-`python server.py`
+
+```sh
+python server.py
+```
