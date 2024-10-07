@@ -1,37 +1,5 @@
 from extensions import db
 
-
-class Age(db.Model):
-    __tablename__ = "age_range"
-
-    age_range_id = db.Column(db.Integer, primary_key=True)
-    age_range_name = db.Column(db.String(150), nullable=False)
-    description = db.Column(db.String(150), nullable=False)
-
-    def __repr__(self):
-        return f"<AgeRange {self.age_range_name}>"
-
-
-class CommunicationStyle(db.Model):
-    __tablename__ = "communication_style"
-
-    communication_style_id = db.Column(db.Integer, primary_key=True)
-    communication_channel = db.Column(db.String(150), nullable=False)
-
-    def __repr__(self):
-        return f"<CommunicationStyle {self.communication_channel}>"
-
-
-class Education(db.Model):
-    __tablename__ = "education"
-
-    education_id = db.Column(db.Integer, primary_key=True)
-    level = db.Column(db.String(150), nullable=False)
-
-    def __repr__(self):
-        return f"<Education {self.level}>"
-
-
 class Persona(db.Model):
     __tablename__ = "persona"
 
@@ -59,3 +27,16 @@ class Persona(db.Model):
 
     def __repr__(self):
         return f"<Persona {self.persona_name}>"
+    
+    def to_dict(self):
+        return {
+            "persona_id": self.persona_id,
+            "persona_name": self.persona_name,
+            "age_range_id": self.age_range_id,
+            "gender" : self.gender,
+            "education_id": self.education_id,
+            "thinking_style": self.thinking_style,
+            "communication_style_id": self.communication_style_id,
+            "short_term_goal": self.short_term_goal,
+            "long_term_goal":self.long_term_goal,
+        }
