@@ -3,10 +3,11 @@ from config import Config
 from extensions import db, bcrypt, jwt
 from routes.auth import auth_bp
 from routes.file_upload import file_upload_bp
+from flask_cors import CORS
 
 
 app = Flask(__name__)
-
+CORS(app)
 # Configure Flask app
 app.config.from_object(Config)
 
