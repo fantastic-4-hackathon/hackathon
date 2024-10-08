@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from sqlalchemy.sql import text
 
 
-load_dotenv() 
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
@@ -23,7 +23,9 @@ bcrypt.init_app(app)
 jwt.init_app(app)
 
 # imports for the blueprints
+# TODO: UNcomment quins code
 from routes.auth import auth_bp
+
 from routes.file_upload import file_upload_bp
 from routes.Persona import Persona_bp
 from routes.Age import age_bp
@@ -31,12 +33,12 @@ from routes.Education import education_bp
 from routes.CommunicationStyle import CommunicationStyle_bp
 
 # Register blueprints (routes)
-app.register_blueprint(auth_bp, url_prefix='/')
-app.register_blueprint(file_upload_bp, url_prefix='/')
-app.register_blueprint(Persona_bp, url_prefix='/persona')
-app.register_blueprint(age_bp, url_prefix='/age')
-app.register_blueprint(education_bp, url_prefix='/education')
-app.register_blueprint(CommunicationStyle_bp, url_prefix='/communication')
+app.register_blueprint(auth_bp, url_prefix="/")
+app.register_blueprint(file_upload_bp, url_prefix="/")
+app.register_blueprint(Persona_bp, url_prefix="/persona")
+app.register_blueprint(age_bp, url_prefix="/age")
+app.register_blueprint(education_bp, url_prefix="/education")
+app.register_blueprint(CommunicationStyle_bp, url_prefix="/communication")
 
 # Create the database tables
 with app.app_context():
