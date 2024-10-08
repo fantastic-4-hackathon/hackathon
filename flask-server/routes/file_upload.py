@@ -4,7 +4,7 @@ import os
 import PyPDF2
 import extract_msg
 from models.upload import Upload
-from extensions import db 
+from extensions import db
 
 file_upload_bp = Blueprint('file_upload', __name__)
 
@@ -29,27 +29,35 @@ def upload_file():
     file.save(filepath)
 
     # Check if the file is a PDF or MSG and extract text
-    if filename.endswith('.pdf'):
-        extracted_text = extract_text_from_pdf(filepath)
-        newUpload = Upload(upload_text=extracted_text)
-        db.session.add(newUpload)
-        db.session.commit()
-        return jsonify({"message": "File uploaded and text extracted", "text": extracted_text}), 200
-    elif filename.endswith('.msg'):
-        extracted_text = extract_text_from_msg(filepath)
-        newUpload = Upload(upload_text=extracted_text)
-        db.session.add(newUpload)
-        db.session.commit()
-        return jsonify({"message": "File uploaded and text extracted", "text": extracted_text}), 200
-    
-    return jsonify({"message": "File uploaded, but no extraction performed"}), 200
+    try:
+        if filename.endswith('.pdf'):
+            extracted_text = extract_text_from_pdf(filepath)
+            if extracted_text is None:
+                return jsonify({"message": "No text from file to be extracted",})
+            newUpload = Upload(upload_text=extracted_text)
+            db.session.add(newUpload)
+            db.session.commit()
+            return jsonify({"message": "File uploaded and text extracted", "text": extracted_text}), 200
+        elif filename.endswith('.msg'):
+            extracted_text = extract_text_from_msg(filepath)
+            if extracted_text is None:
+                return jsonify({"message": "No text from file to be extracted",})
+            newUpload = Upload(upload_text=extracted_text)
+            db.session.add(newUpload)
+            db.session.commit()
+            return jsonify({"message": "File uploaded and text extracted", "text": extracted_text}), 200
+        
+        return jsonify({"message": "File uploaded, but no extraction performed"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 def extract_text_from_pdf(filepath):
     text = ""
     with open(filepath, "rb") as file:
         reader = PyPDF2.PdfReader(file)
         for page in range(len(reader.pages)):
-            text += reader.pages[page].extract_text()
+            text += reader.pages[page].extract_text() or ''
     return text
 
 def extract_text_from_msg(filepath):
