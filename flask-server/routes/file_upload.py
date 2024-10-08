@@ -32,7 +32,7 @@ def upload_file():
     try:
         if filename.endswith('.pdf'):
             extracted_text = extract_text_from_pdf(filepath)
-            if extracted_text is None:
+            if extracted_text == "":
                 return jsonify({"message": "No text from file to be extracted",})
             newUpload = Upload(upload_text=extracted_text)
             db.session.add(newUpload)
@@ -40,7 +40,7 @@ def upload_file():
             return jsonify({"message": "File uploaded and text extracted", "text": extracted_text}), 200
         elif filename.endswith('.msg'):
             extracted_text = extract_text_from_msg(filepath)
-            if extracted_text is None:
+            if extracted_text == "":
                 return jsonify({"message": "No text from file to be extracted",})
             newUpload = Upload(upload_text=extracted_text)
             db.session.add(newUpload)
