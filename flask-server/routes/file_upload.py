@@ -3,6 +3,8 @@ from werkzeug.utils import secure_filename
 import os
 import PyPDF2
 import extract_msg
+from models.upload import Upload
+from extensions import db 
 
 file_upload_bp = Blueprint('file_upload', __name__)
 
@@ -29,9 +31,11 @@ def upload_file():
     # Check if the file is a PDF or MSG and extract text
     if filename.endswith('.pdf'):
         extracted_text = extract_text_from_pdf(filepath)
+        newUpload = Upload(upload_text=extracted_text)
         return jsonify({"message": "File uploaded and text extracted", "text": extracted_text}), 200
     elif filename.endswith('.msg'):
         extracted_text = extract_text_from_msg(filepath)
+        newUpload = Upload(upload_text=extracted_text)
         return jsonify({"message": "File uploaded and text extracted", "text": extracted_text}), 200
     
     return jsonify({"message": "File uploaded, but no extraction performed"}), 200
