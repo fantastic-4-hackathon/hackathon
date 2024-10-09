@@ -42,11 +42,6 @@ app.register_blueprint(education_bp, url_prefix="/education")
 app.register_blueprint(CommunicationStyle_bp, url_prefix="/communication")
 app.register_blueprint(contacts_bp, url_prefix="/contacts")
 
-# Create the database tables
-with app.app_context():
-    db.create_all()
-
-
 if __name__ == "__main__":
     app.run(debug=True)
     try:
