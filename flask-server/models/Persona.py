@@ -1,10 +1,11 @@
 from extensions import db
 
+
 class Persona(db.Model):
     __tablename__ = "persona"
 
     persona_id = db.Column(db.Integer, primary_key=True)
-    persona_name = db.Column(db.String(50), nullable=False)
+    name = db.Column(db.String(50), nullable=False)
     age_range_id = db.Column(
         db.Integer, db.ForeignKey("age_range.age_range_id"), nullable=False
     )
@@ -26,17 +27,17 @@ class Persona(db.Model):
     communication_style = db.relationship("CommunicationStyle")
 
     def __repr__(self):
-        return f"<Persona {self.persona_name}>"
-    
+        return f"<Persona {self.name}>"
+
     def to_dict(self):
         return {
             "persona_id": self.persona_id,
-            "persona_name": self.persona_name,
+            "name": self.name,
             "age_range_id": self.age_range_id,
-            "gender" : self.gender,
+            "gender": self.gender,
             "education_id": self.education_id,
             "thinking_style": self.thinking_style,
             "communication_style_id": self.communication_style_id,
             "short_term_goal": self.short_term_goal,
-            "long_term_goal":self.long_term_goal,
+            "long_term_goal": self.long_term_goal,
         }
