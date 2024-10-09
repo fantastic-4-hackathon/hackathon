@@ -8,5 +8,8 @@ Persona_bp = Blueprint("Persona", __name__)
 def login():
     body = request.get_json()
     user = User.query.filter_by(user_Ecode=body.user_Ecode).first()
-    return jsonify(user)
+    if user:
+        return jsonify({'message':"Success","user":user})
+    else:
+        return jsonify({'message': 'Failed'})
 
