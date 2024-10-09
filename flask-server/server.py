@@ -32,6 +32,7 @@ from routes.Age import age_bp
 from routes.Education import education_bp
 from routes.CommunicationStyle import CommunicationStyle_bp
 from routes.Contacts import contacts_bp
+from routes.user import user_bp
 
 # Register blueprints (routes)
 app.register_blueprint(auth_bp, url_prefix="/")
@@ -41,11 +42,7 @@ app.register_blueprint(age_bp, url_prefix="/age")
 app.register_blueprint(education_bp, url_prefix="/education")
 app.register_blueprint(CommunicationStyle_bp, url_prefix="/communication")
 app.register_blueprint(contacts_bp, url_prefix="/contacts")
-
-# Create the database tables
-with app.app_context():
-    db.create_all()
-
+app.register_blueprint(user_bp, url_prefix="/user")
 
 if __name__ == "__main__":
     app.run(debug=True)
