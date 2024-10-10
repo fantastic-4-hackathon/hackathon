@@ -15,6 +15,10 @@ python -m venv myenv
 pip install -r requirements.txt
 ```
 
+## Create an .env file in the flask-server folder
+
+make sure there is a environment variable named `LOCAL_CONNECTION_URL` which is he connection string to the database
+
 ## Run server script
 
 One needs to make sure they are in the activated Environment then run the server.py file
